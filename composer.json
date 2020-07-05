@@ -1,0 +1,20 @@
+{
+    "name": "redchamps/butter",
+    "description": "A smooth Magento version installer",
+    "authors": [
+        {
+            "name": "Ravinder",
+            "email": "rav@redchamps.com"
+        }
+    ],
+    "require": {
+        "symfony/console": "^5.1",
+        "symfony/process": "^5.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Console\\": "src"
+        },
+        "classmap": ["src"]
+    }
+}
