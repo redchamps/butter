@@ -1,3 +1,5 @@
 /setups/*
 /.idea/*
 /vendor/*
+/butter-config.php
+/composer.lock

@@ -1,17 +1,22 @@
 #!/usr/bin/env php
 <?php
-require_once __DIR__ . '/../vendor/autoload.php';
+/**
+ * Load correct autoloader depending on install location.
+ */
+if (file_exists(__DIR__.'/../vendor/autoload.php')) {
+    require __DIR__.'/../vendor/autoload.php';
+} else {
+    require __DIR__.'/../../../autoload.php';
+}
 
-use Symfony\Component\Console\Application;
-use Console\App\Commands\MagentoInstall;
-use Console\App\Commands\SubCommands\PlaceFiles;
-use Console\App\Commands\SubCommands\CreateDatabase;
-use Console\App\Commands\SubCommands\Install;
+use Console\AppInstance;
 
-$config = require __DIR__ . '/../etc/config.php';
-$app = new Application();
-$app->add(new MagentoInstall($config));
-$app->add(new PlaceFiles($config));
-$app->add(new CreateDatabase($config));
-$app->add(new Install($config));
-$app->run();
+$config = __DIR__;
+if(file_exists(__DIR__ . '/../butter-config.php')) {
+    $config = require __DIR__ . '/../butter-config.php';
+} else if(file_exists(__DIR__ . '/../../butter-config.php')) {
+    $config = require __DIR__ . '/../../butter-config.php';
+}
+
+$app = new AppInstance($config);
+$app->fetch()->run();

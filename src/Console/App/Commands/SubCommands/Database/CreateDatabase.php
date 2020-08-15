@@ -1,5 +1,5 @@
 <?php
-namespace Console\App\Commands\SubCommands;
+namespace Console\App\Commands\SubCommands\Database;
 
 use Console\App\Commands\AbstractCommand;
 use Symfony\Component\Console\Command\Command;
@@ -19,16 +19,16 @@ class CreateDatabase extends AbstractCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln(sprintf('<info>->Creating Database</info>'));
+        $output->writeln(sprintf('<info>-> Creating Database</info>'));
         $this->validateAndCreateDatabase($input, $output);
-        return Command::SUCCESS;
+        return Self::SUCCESS;
     }
 
     protected function validateAndCreateDatabase(InputInterface $input, OutputInterface $output)
     {
         try {
-            $dbName = str_replace("<version>", $input->getArgument('version'), $this->config['db']['connection']['dbname']);
-            $dbName = $input->getArgument('edition') == "enterprise"?$dbName."_ee":$dbName;
+            $dbName = str_replace("<version>", $input->getArgument("installation-name"), $this->config['db']['connection']['dbname']);
+            $_SERVER['db_name'] = $dbName;
             $dsn = sprintf(
                 'mysql:host=%s;port=%s',
                 $this->config['db']['connection']['host'],
@@ -39,7 +39,7 @@ class CreateDatabase extends AbstractCommand
 
             if (!$db->query('USE `' . $dbName . '`')) {
                 $db->query('CREATE DATABASE `' . $dbName . '`');
-                $output->writeln('<info>->Created database ' . $dbName . '</info>');
+                $output->writeln('<info>->-> Created database ' . $dbName . '</info>');
                 $db->query('USE `' . $dbName . '`');
 
                 // Check DB version
