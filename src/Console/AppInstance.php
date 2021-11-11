@@ -21,28 +21,30 @@ class AppInstance
 {
     protected $config;
 
-    public function __construct($config)
+    public function __construct($config, $root)
     {
         $this->config = $config;
+        $this->root = $root;
     }
+
     public function fetch()
     {
         $config = $this->config;
         $app = new Application();
-        $app->add(new MagentoInstall($config));
-        $app->add(new ListInstallations($config));
-        $app->add(new DeleteInstallation($config));
-        $app->add(new PlaceFiles($config));
-        $app->add(new DeleteFiles($config));
-        $app->add(new CreateDatabase($config));
-        $app->add(new DeleteDatabase($config));
-        $app->add(new Install($config));
-        $app->add(new CopyConfig($config));
-        $app->add(new PreInstall($config));
-        $app->add(new PostInstall($config));
-        $app->add(new CreateVhost($config));
-        $app->add(new DeleteVhost($config));
-        $app->add(new RestartServer($config));
+        $app->add(new MagentoInstall($config, $this->root));
+        $app->add(new ListInstallations($config, $this->root));
+        $app->add(new DeleteInstallation($config, $this->root));
+        $app->add(new PlaceFiles($config, $this->root));
+        $app->add(new DeleteFiles($config, $this->root));
+        $app->add(new CreateDatabase($config, $this->root));
+        $app->add(new DeleteDatabase($config, $this->root));
+        $app->add(new Install($config, $this->root));
+        $app->add(new CopyConfig($config, $this->root));
+        $app->add(new PreInstall($config, $this->root));
+        $app->add(new PostInstall($config, $this->root));
+        $app->add(new CreateVhost($config, $this->root));
+        $app->add(new DeleteVhost($config, $this->root));
+        $app->add(new RestartServer($config, $this->root));
         return $app;
     }
 }

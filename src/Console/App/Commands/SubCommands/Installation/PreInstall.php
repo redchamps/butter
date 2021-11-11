@@ -20,17 +20,29 @@ class PreInstall extends AbstractCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln(sprintf('<info>-> Running Pre-Install Commands</info>'));
-        $directory = $this->config['installation_root'].$input->getArgument('installation-name');
+        $installationName = $input->getArgument('installation-name');
+        $directory = $this->getInstallationRoot($input).$installationName;
+        if ($input->getOption("pre-install-commands") != "null") {
+            $customCommands = explode(",", $input->getOption("pre-install-commands"));
+            $this->config['pre_install_commands'] = isset($this->config['pre_install_commands'])?array_merge($this->config['pre_install_commands'], $customCommands):$customCommands;
+        }
+        if(isset($this->config['pre_install_commands']) && $this->config['pre_install_commands']) {
+            foreach ($this->config['pre_install_commands'] as $command) {
+                $command = str_replace("<installation-name>",$installationName, $command);
+                $output->writeln(sprintf('<info>->->-> Running command %s</info>', $command));
+                $this->runCommand("cd $directory && $command");
+            }
+        }
         if(isset($this->config['extra_extensions']) && $this->config['extra_extensions']) {
             $output->writeln(sprintf('<info>->-> Installing Extra Extensions</info>'));
             foreach ($this->config['extra_extensions'] as $extension) {
                 $output->writeln(sprintf("<info>->->-> Installing Extension $extension</info>"));
-                system("cd $directory && composer require $extension");
+                system("cd $directory && {$this->composerBin} require $extension");
             }
         }
         if ($input->getOption("sample-data") == "y") {
             $output->writeln(sprintf('<info>->-> Installing sample data</info>'));
-            system("cd $directory && php bin/magento sampledata:deploy");
+            system("cd $directory && {$this->phpBin} bin/magento sampledata:deploy");
         }
         return Self::SUCCESS;
     }

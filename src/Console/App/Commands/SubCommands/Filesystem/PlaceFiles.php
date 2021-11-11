@@ -23,9 +23,9 @@ class PlaceFiles extends AbstractCommand
             $output->writeln(sprintf('<info>-> Downloading package</info>'));
             $version =  $input->getArgument('version');
             $config =  $this->config;
-            $directory = $config['installation_root'].$input->getArgument("installation-name");
+            $directory = $this->getInstallationRoot($input).$input->getArgument("installation-name");
             if ($input->getOption('method') == "composer" || $input->getOption('edition') == "enterprise") {
-                $command = " composer create-project --repository-url=https://repo.magento.com/ magento/project-{$input->getOption('edition')}-edition=$version $directory";
+                $command = " {$this->composerBin} create-project --repository-url=https://repo.magento.com/ magento/project-{$input->getOption('edition')}-edition=$version $directory";
                 system($command);
             } else {
                 $setupDir = $config['setup_directory'];

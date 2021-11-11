@@ -26,12 +26,16 @@ class MagentoInstall extends AbstractCommand
                 $input->getOption('edition'), $version
             )
         );
-        $installationName = str_replace([".", "-"], ["", ""], $version);
         $arguments = $input->getArguments();
         foreach ($input->getOptions() as $name => $value) {
             $arguments["--".$name] = $value;
         }
-        $arguments['installation-name'] = $input->getOption("edition") == "enterprise"?$installationName."-ee":$installationName;
+        if ($input->getOption("installation-name") == "null") {
+            $installationName = str_replace([".", "-"], ["", ""], $version);
+            $arguments['installation-name'] = $input->getOption("edition") == "enterprise"?$installationName."-ee":$installationName;
+        } else {
+            $arguments['installation-name'] = $input->getOption("installation-name");
+        }
         $processedArguments = new ArrayInput($arguments);
 
         $this->getApplication()->find('place:files')->run($processedArguments, $output);
@@ -47,6 +51,7 @@ class MagentoInstall extends AbstractCommand
             $this->getApplication()->find('create:vhost')->run($processedArguments, $output);
             $this->getApplication()->find('restart:server')->run($processedArguments, $output);
         }
+        $this->postExecute($output);
         return Self::SUCCESS;
     }
 }

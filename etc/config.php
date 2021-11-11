@@ -28,6 +28,8 @@ return [
         'mage_id' => ''
     ],
     'installation_root' => '/var/www/html/',
+    'php_bin_path' => '/usr/local/bin/php',
+    'composer_bin_path' => '/usr/local/bin/composer',
     'setup_directory' => '~',
     'base_url' => 'http://<version>.test',
     'zip_file' => [
@@ -38,7 +40,7 @@ return [
     /*
      * Specify if performance profile needs to be generated for every installation
      * */
-    'generate_performance_profile' => 'n', //allowed values n, small, medium, large, extra_large
+    'generate_performance_profile' => 'custom', //allowed values n, custom, small, medium, large, extra_large
     'installation_options' => [
         "frontname" => "admin",
         "admin-username" => "admin",
@@ -56,7 +58,15 @@ return [
 
     ],
     /*
+     * Enter additional commands that needs to ran before Magento installation
+     * You may use variable <installation-name> to get it replaced with magento instance name dynamically
+     * */
+    'pre_install_commands' => [
+
+    ],
+    /*
      * Enter additional commands that needs to ran after Magento installation
+     * You may use variable <installation-name> to get it replaced with magento instance name dynamically
      * */
     'post_install_commands' => [
 

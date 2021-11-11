@@ -27,7 +27,7 @@ class CreateVhost extends AbstractCommand
                 '<domain>'
             ],
             [
-                $this->config['installation_root'].$input->getArgument('installation-name'),
+                $this->getInstallationRoot($input).$input->getArgument('installation-name'),
                 $input->getArgument('domain')
             ],
             $this->config['vhost']['vhost_config']

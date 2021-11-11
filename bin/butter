@@ -11,12 +11,12 @@ if (file_exists(__DIR__.'/../vendor/autoload.php')) {
 
 use Console\AppInstance;
 
-$config = __DIR__;
+$root = $config = __DIR__;
 if(file_exists(__DIR__ . '/../butter-config.php')) {
     $config = require __DIR__ . '/../butter-config.php';
 } else if(file_exists(__DIR__ . '/../../butter-config.php')) {
     $config = require __DIR__ . '/../../butter-config.php';
 }
 
-$app = new AppInstance($config);
+$app = new AppInstance($config, $root);
 $app->fetch()->run();

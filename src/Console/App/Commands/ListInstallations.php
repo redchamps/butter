@@ -3,6 +3,7 @@ namespace Console\App\Commands;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\ArrayInput;
 
@@ -11,6 +12,7 @@ class ListInstallations extends AbstractCommand
     protected function configure()
     {
         $this->setName('magento:list')
+            ->addOption('installation-root', null, InputOption::VALUE_OPTIONAL,'Choose installation root', "null")
             ->setDescription('See Installed Magento 2 versions');
     }
 
@@ -23,8 +25,8 @@ class ListInstallations extends AbstractCommand
         $output->writeln(
             sprintf('<info>Available Magento installations:</info>')
         );
-        $this->runCommand("cd {$this->config['installation_root']} && ls | cat -n");
-
+        $this->runCommand("cd {$this->getInstallationRoot($input)} && ls | cat -n");
+        $this->postExecute($output);
         return Self::SUCCESS;
     }
 }
