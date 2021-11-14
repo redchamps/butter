@@ -68,7 +68,8 @@ class AbstractCommand extends Command
 
     protected function getTimeTaken()
     {
-        return number_format((microtime(true)-$this->startTime)/60,2);
+        $diff = microtime(true)-$this->startTime;
+        return intval($diff/60).".".($diff%60);
     }
 
     protected function getInstallationRoot($input)
