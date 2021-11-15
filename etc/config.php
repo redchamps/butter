@@ -49,6 +49,10 @@ return [
         "admin-lastname" => "User",
         "admin-email" => "admin@example.com"
     ],
+    /*Specify list of Magento modules you would like to keep disabled*/
+    'disable_modules' => [
+
+    ],
     /*
      * Specify  composer package names of extra extensions if needs to be installed
      * For, example 'redchamps/module-easy-cache-clean' for

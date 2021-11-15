@@ -26,7 +26,8 @@ class Install extends AbstractCommand
         $this->getApplication()->find('pre:install')->run($input, $output);
         $output->writeln(sprintf('<info>-> Initiating Installation</info>'));
         $installationOptions = $this->config['installation_options'];
-        $command = "cd $directory && {$this->phpBin} bin/magento setup:install --backend-frontname='{$installationOptions['frontname']}' --session-save='files' --db-host='{$this->config['db']['connection']['host']}' --db-name='$dbName' --db-user='{$this->config['db']['connection']['username']}' --db-password='{$this->config['db']['connection']['password']}' --base-url='$baseUrl' --admin-user='{$installationOptions['admin-username']}' --admin-password='{$installationOptions['admin-password']}' --admin-email='{$installationOptions['admin-email']}' --admin-firstname='{$installationOptions['admin-firstname']}' --admin-lastname='{$installationOptions['admin-lastname']}' 2>&1";
+        $disabledModules = isset($this->config['disable_modules'])?implode(",", $this->config['disable_modules']):"";
+        $command = "cd $directory && {$this->phpBin} bin/magento setup:install --backend-frontname='{$installationOptions['frontname']}' --session-save='files' --db-host='{$this->config['db']['connection']['host']}' --db-name='$dbName' --db-user='{$this->config['db']['connection']['username']}' --db-password='{$this->config['db']['connection']['password']}' --base-url='$baseUrl' --admin-user='{$installationOptions['admin-username']}' --admin-password='{$installationOptions['admin-password']}' --admin-email='{$installationOptions['admin-email']}' --admin-firstname='{$installationOptions['admin-firstname']}' --admin-lastname='{$installationOptions['admin-lastname']}' --disable-modules='{$disabledModules}' 2>&1";
         $this->runCommand($command);
         $this->getApplication()->find('post:install')->run($input, $output);
         $output->writeln(sprintf('<info>Frontend: %s</info>', $baseUrl));
