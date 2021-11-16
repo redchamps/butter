@@ -48,14 +48,14 @@ class AbstractCommand extends Command
         $output->writeln(sprintf('<comment>Time Taken: %s minutes</comment>', $this->getTimeTaken()));
     }
 
-    protected function runCommand($command)
+    protected function runCommand($command, $soft = false)
     {
         $process = Process::fromShellCommandline($command);
         $process->setTimeout(0);
         $process->run(function ($type, $buffer) {
             echo $buffer;
         });
-        if (!$process->isSuccessful()) {
+        if (!$process->isSuccessful() && !$soft) {
             throw new ProcessFailedException($process);
         }
         return $process;

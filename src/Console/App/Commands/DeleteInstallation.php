@@ -29,6 +29,15 @@ class DeleteInstallation extends AbstractCommand
         $output->writeln(
             sprintf('<info>Deleting Magento installation %s</info>', $installationName)
         );
+        $output->writeln(
+            sprintf('<info>-> Deleting Cron Jobs</info>')
+        );
+
+        $this->runCommand(
+            "{$this->phpBin} {$this->getInstallationRoot($input)}$installationName/bin/magento cron:remove",
+            true
+        );
+
         $this->getApplication()->find('delete:files')->run($input, $output);
         $this->getApplication()->find('delete:database')->run($input, $output);
         if($this->vhostEnabled()) {

@@ -12,7 +12,7 @@
         <store_groups>1</store_groups> <!--Number of stores-->
         <store_views>1</store_views> <!-- Number of store views -->
         <assign_entities_to_all_websites>0</assign_entities_to_all_websites> <!-- Whether to assign all products per each website -->
-        <simple_products>800</simple_products> <!-- Simple products count -->
+        <simple_products>80</simple_products> <!-- Simple products count -->
         <configurable_products> <!-- Configurable product -->
             <config>
                 <attributes>
@@ -30,9 +30,9 @@
         </configurable_products>
         <product-images>
             <images-count>100</images-count>
-            <images-per-product>3</images-per-product>
+            <images-per-product>2</images-per-product>
         </product-images>
-        <categories>30</categories> <!-- Number of categories to generate -->
+        <categories>15</categories> <!-- Number of categories to generate -->
         <categories_nesting_level>3</categories_nesting_level> <!-- Nesting level for categories -->
         <customers>2</customers> <!-- Number of customers to generate -->
 
