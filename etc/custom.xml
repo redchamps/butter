@@ -41,7 +41,7 @@
         <cart_price_rules_floor>2</cart_price_rules_floor>
         <coupon_codes>0</coupon_codes> <!-- Number of coupon codes -->
 
-        <product_attribute_sets>2</product_attribute_sets> <!-- Number of product attribute sets -->
+        <product_attribute_sets>1</product_attribute_sets> <!-- Number of product attribute sets -->
         <product_attribute_sets_attributes>5</product_attribute_sets_attributes> <!-- Number of attributes per set -->
         <product_attribute_sets_attributes_values>5</product_attribute_sets_attributes_values> <!-- Number of values per attribute -->
 
@@ -79,6 +79,18 @@
             </config>
             <config>
                 <path>carriers/flatrate/active</path>
+                <scope>default</scope>
+                <scopeId>0</scopeId>
+                <value>1</value>
+            </config>
+            <config>
+                <path>web/seo/use_rewrites</path>
+                <scope>default</scope>
+                <scopeId>0</scopeId>
+                <value>1</value>
+            </config>
+            <config>
+                <path>design/head/demonotice</path>
                 <scope>default</scope>
                 <scopeId>0</scopeId>
                 <value>1</value>

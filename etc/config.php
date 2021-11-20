@@ -51,7 +51,8 @@ return [
     ],
     /*Specify list of Magento modules you would like to keep disabled*/
     'disable_modules' => [
-
+        "Magento_ReleaseNotification",
+        "Magento_AdminAnalytics"
     ],
     /*
      * Specify  composer package names of extra extensions if needs to be installed

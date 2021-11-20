@@ -22,8 +22,6 @@ class PostInstall extends AbstractCommand
         $output->writeln(sprintf('<info>-> Running Post-Install Commands</info>'));
         $installationName = $input->getArgument('installation-name');
         $directory = $this->getInstallationRoot($input).$installationName;
-        $output->writeln(sprintf('<info>->-> Saving url rewrites config</info>'));
-        $this->runCommand("cd $directory && {$this->phpBin} bin/magento config:set web/seo/use_rewrites 1");
         if(version_compare($input->getArgument('version'), '2.4.0', 'ge')) {
             $output->writeln(sprintf('<info>->-> Disabling Two-Factor Auth Module</info>'));
             $this->runCommand("cd $directory && {$this->phpBin} bin/magento module:disable Magento_TwoFactorAuth");
@@ -50,7 +48,7 @@ class PostInstall extends AbstractCommand
                 $command = str_replace("<installation-name>", $installationName, $command);
                 $command = str_replace("<time-taken>", $this->getTimeTaken(), $command);
                 $output->writeln(sprintf('<info>->-> Running command %s</info>', $command));
-                system("cd $directory && $command");
+                $this->runCommand("cd $directory && $command");
             }
         }
         return Self::SUCCESS;
