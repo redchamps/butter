@@ -95,6 +95,12 @@
                 <scopeId>0</scopeId>
                 <value>1</value>
             </config>
+            <config>
+                <path>customer/create_account/email_domain</path>
+                <scope>default</scope>
+                <scopeId>0</scopeId>
+                <value>yopmail.com</value>
+            </config>
         </configs>
         <indexers> <!-- Indexer mode value (true - Update by Schedule, false - Update on Save) -->
             <indexer>

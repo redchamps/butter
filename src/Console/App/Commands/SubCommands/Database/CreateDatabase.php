@@ -37,7 +37,7 @@ class CreateDatabase extends AbstractCommand
 
             $db = new \PDO($dsn, $this->config['db']['connection']['username'], $this->config['db']['connection']['password']);
 
-            if (!$db->query('USE `' . $dbName . '`')) {
+            //if (!$db->query('USE `' . $dbName . '`')) {
                 $db->query('CREATE DATABASE `' . $dbName . '`');
                 $output->writeln('<info>->-> Created database ' . $dbName . '</info>');
                 $db->query('USE `' . $dbName . '`');
@@ -50,9 +50,9 @@ class CreateDatabase extends AbstractCommand
                 }
 
                 return $db;
-            }
+            //}
 
-            return $db;
+            //return $db;
         } catch (\Exception $e) {
             $output->writeln('<error>' . $e->getMessage() . '</error>');
         }
