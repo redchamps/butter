@@ -21,6 +21,8 @@ class AppInstance
 {
     protected $config;
 
+    protected $root;
+
     public function __construct($config, $root)
     {
         $this->config = $config;
