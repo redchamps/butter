@@ -68,7 +68,7 @@ class AbstractCommand extends Command
 
     protected function getTimeTaken()
     {
-        $diff = microtime(true)-$this->startTime;
+        $diff = intval(microtime(true)-$this->startTime);
         return intval($diff/60).".".($diff%60);
     }
 
