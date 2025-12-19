@@ -22,9 +22,15 @@ class PostInstall extends AbstractCommand
         $output->writeln(sprintf('<info>-> Running Post-Install Commands</info>'));
         $installationName = $input->getArgument('installation-name');
         $directory = $this->getInstallationRoot($input).$installationName;
-        if(version_compare($input->getArgument('version'), '2.4.0', 'ge')) {
+        if(version_compare($input->getArgument('version'), '2.4.0', 'ge') || $input->getOption("edition") == 'mage-os') {
             $output->writeln(sprintf('<info>->-> Disabling Two-Factor Auth Module</info>'));
-            $this->runCommand("cd $directory && {$this->phpBin} bin/magento module:disable Magento_TwoFactorAuth");
+            system("cd $directory && {$this->phpBin} bin/magento module:disable Magento_TwoFactorAuth");
+            if (isset($this->config['mysql_legacy']) && $this->config['mysql_legacy'] == 'y') {
+                $output->writeln(sprintf('<info>->-> Setting Legacy mysql</info>'));
+                $legacyMysqlCommand = "bin/magento config:set catalog/search/engine 'lmysql'";
+                $output->writeln(sprintf('<info>->->-> Running command %s</info>', $legacyMysqlCommand));
+                $this->runCommand("cd $directory && {$this->phpBin} $legacyMysqlCommand");
+            }
         }
         if ($this->config['generate_performance_profile'] != "n" || $input->getOption("generate-profile") != "n") {
             $output->writeln(sprintf('<info>->-> Generating performance profile</info>'));

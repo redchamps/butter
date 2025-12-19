@@ -32,7 +32,17 @@ class MagentoInstall extends AbstractCommand
         }
         if ($input->getOption("installation-name") == "null") {
             $installationName = str_replace([".", "-"], ["", ""], $version);
-            $arguments['installation-name'] = $input->getOption("edition") == "enterprise"?$installationName."-ee":$installationName;
+            switch ($input->getOption("edition") ) {
+                case 'enterprise':
+                    $suffix = '-ee';
+                    break;
+                case 'mage-os':
+                    $suffix = '-mage-os';
+                    break;
+                default:
+                    $suffix = '';
+            }
+            $arguments['installation-name'] = $installationName.$suffix;
         } else {
             $installationName = $input->getOption("installation-name");
             $arguments['installation-name'] = $input->getOption("installation-name");

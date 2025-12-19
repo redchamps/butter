@@ -40,6 +40,13 @@ class PreInstall extends AbstractCommand
                 system("cd $directory && {$this->composerBin} require $extension");
             }
         }
+        if((version_compare($input->getArgument('version'), '2.4.0', 'ge') || $input->getOption("edition") == 'mage-os') &&
+            isset($this->config['mysql_legacy']) &&
+            $this->config['mysql_legacy'] == 'y'
+        ) {
+            $output->writeln(sprintf('<info>->-> Installing Mysql Legacy Extension</info>'));
+            system("cd $directory && {$this->composerBin} require swissup/module-search-mysql-legacy");
+        }
         if ($input->getOption("sample-data") == "y") {
             $output->writeln(sprintf('<info>->-> Installing sample data</info>'));
             system("cd $directory && {$this->phpBin} bin/magento sampledata:deploy");

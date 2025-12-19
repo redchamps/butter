@@ -7,7 +7,7 @@
  * */
 return [
     'db' => [
-        'table_prefix' => '',
+        'table_prefix' => 'mage_',
         'connection' => [
             'host' => 'localhost',
             'dbname' => 'magento_<version>',
@@ -41,6 +41,10 @@ return [
      * Specify if performance profile needs to be generated for every installation
      * */
     'generate_performance_profile' => 'custom', //allowed values n, custom, small, medium, large, extra_large
+    /*
+     * Set to 'y' to install Magento without elasticsearch or opensearch requirement
+     * */
+    'mysql_legacy' => 'n', //allowed values y, n
     'installation_options' => [
         "frontname" => "admin",
         "admin-username" => "admin",
